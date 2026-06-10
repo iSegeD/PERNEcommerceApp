@@ -4,9 +4,9 @@ import express from "express";
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
 
-import { getEnv } from "./lib/env.ts";
+import { getEnv } from "./lib/env.js";
 
-import { clerkWebhookHandler } from "./webhooks/clerk.ts";
+import { clerkWebhookHandler } from "./webhooks/clerk.js";
 
 import fs from "node:fs";
 import path from "node:path";
