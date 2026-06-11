@@ -1,15 +1,22 @@
 import "dotenv/config";
 
-import express from "express";
+import express, {
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
 
 import { getEnv } from "./lib/env.js";
-
 import { clerkWebhookHandler } from "./webhooks/clerk.js";
 
 import fs from "node:fs";
 import path from "node:path";
+
+import meRouter from "./routes/meRouter.js";
+import productRouter from "./routes/productRouter.js";
+import streamRouter from "./routes/streamRouter.js";
 
 const env = getEnv();
 const app = express();
@@ -24,12 +31,16 @@ app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
 
+app.use("/api/me", meRouter);
+app.use("/api/products", productRouter);
+app.use("/api/stream", streamRouter);
+
 const publicDir = path.join(process.cwd(), "public");
 
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
 
-  app.get("/{*any}", (req, res, next) => {
+  app.get("/{*any}", (req: Request, res: Response, next: NextFunction) => {
     if (req.method !== "GET" && req.method !== "HEAD") {
       next();
       return;
