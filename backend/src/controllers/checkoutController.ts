@@ -1,6 +1,6 @@
 import { type RequestHandler } from "express";
-import z from "zod";
 import { getAuth } from "@clerk/express";
+import z from "zod";
 
 import { getEnv } from "../lib/env.js";
 import { getLocalUser } from "../lib/users.js";
