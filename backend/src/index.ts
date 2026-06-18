@@ -8,12 +8,16 @@ import express, {
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
 
+import * as Sentry from "@sentry/node";
+
 import { getEnv } from "./lib/env.js";
 import { clerkWebhookHandler } from "./webhooks/clerk.js";
 import { polarWebhookHandler } from "./webhooks/polar.js";
 
 import fs from "node:fs";
 import path from "node:path";
+
+import { sentryClerkUserMiddleware } from "./middleware/sentryClerkUser.js";
 
 import meRouter from "./routes/meRouter.js";
 import productRouter from "./routes/productRouter.js";
@@ -36,6 +40,7 @@ app.post("/webhooks/polar", rawJson, (req, res) => {
 app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
+app.use(sentryClerkUserMiddleware);
 
 app.use("/api/me", meRouter);
 app.use("/api/products", productRouter);
@@ -61,6 +66,17 @@ if (fs.existsSync(publicDir)) {
     res.sendFile(path.join(publicDir, "index.html"), (err) => next(err));
   });
 }
+
+Sentry.setupExpressErrorHandler(app);
+
+app.use((_err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  const sentryId = (res as Response & { sentry?: string }).sentry;
+
+  res.status(500).json({
+    error: "Internal server error",
+    ...(sentryId !== undefined && { sentryId }),
+  });
+});
 
 app.listen(env.PORT, () => {
   console.log(`Server is running on port ${env.PORT}`);
