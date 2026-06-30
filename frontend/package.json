@@ -14,13 +14,16 @@
     "@sentry/react": "^10.62.0",
     "@tailwindcss/vite": "^4.3.1",
     "@tanstack/react-query": "^5.101.2",
+    "axios": "^1.18.1",
     "lucide-react": "^1.22.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router": "^8.0.1",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.1",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@clerk/types": "^4.101.25",
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
