@@ -18,9 +18,9 @@ import { useCart } from "../store/cart";
 const Navbar = () => {
   const { getToken, isSignedIn } = useAuth();
 
-  const { data } = useQuery<MeResponse>({
+  const { data } = useQuery({
     queryKey: ["me"],
-    queryFn: () => apiFetch("/api/me", { getToken }),
+    queryFn: () => apiFetch<MeResponse>("/api/me", { getToken }),
     enabled: isSignedIn,
   });
 
@@ -41,7 +41,7 @@ const Navbar = () => {
             <span className="flex size-10 items-center justify-center rounded-lg bg-primary/15 p-1 text-primary">
               <StoreIcon className="size-8" aria-hidden />
             </span>
-            <span className="leading-none">Nordshop</span>
+            <span className="leading-none">Northshop</span>
           </Link>
         </div>
 

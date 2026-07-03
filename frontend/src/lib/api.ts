@@ -16,7 +16,7 @@ type ApiOptions = {
   body?: unknown;
 };
 
-export const apiFetch = async (path: string, options: ApiOptions = {}) => {
+export const apiFetch = async <T>(path: string, options: ApiOptions = {}) => {
   const { getToken, method = "GET", body } = options;
 
   const headers: Record<string, string> = {};
@@ -44,7 +44,7 @@ export const apiFetch = async (path: string, options: ApiOptions = {}) => {
       data: { status: res.status },
     });
 
-    return res.data;
+    return res.data as T;
   } catch (error: unknown) {
     Sentry.addBreadcrumb({
       category: "api",
