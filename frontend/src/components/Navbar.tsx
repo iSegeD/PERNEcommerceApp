@@ -52,7 +52,7 @@ const Navbar = () => {
           </Link>
 
           <Show when={"signed-in"}>
-            <Link to="/" className="btn btn-ghost gap-2 font-medium">
+            <Link to="/orders" className="btn btn-ghost gap-2 font-medium">
               <PackageIcon className="size-6 opacity-90" aria-hidden />
               <span className="hidden sm:inline">Orders</span>
             </Link>

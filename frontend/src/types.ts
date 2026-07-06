@@ -1,6 +1,7 @@
 export type UserRole = "customer" | "admin" | "support";
+export type OrderStatus = "pending" | "paid" | "failed";
 
-export type User = {
+type User = {
   id: string;
   clerkUserId: string;
   email: string;
@@ -8,10 +9,6 @@ export type User = {
   role: UserRole;
   createdAt: string;
   updatedAt: string;
-};
-
-export type MeResponse = {
-  user: User | undefined;
 };
 
 export type Product = {
@@ -28,6 +25,29 @@ export type Product = {
   createdAt: string;
 };
 
+export type PreviewItems = {
+  name: string;
+  slug: string;
+  imageUrl: string | null;
+  quantity: number;
+};
+
+type Order = {
+  previewItems: PreviewItems[];
+  id: string;
+  userId: string;
+  status: OrderStatus;
+  polarCheckoutId: string | null;
+  polarOrderId: string | null;
+  totalCents: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MeResponse = {
+  user: User | undefined;
+};
+
 export type CategoriesResponse = {
   categories: string[];
 };
@@ -38,4 +58,8 @@ export type ProductsResponse = {
 
 export type CheckoutResponse = {
   checkoutUrl: string;
+};
+
+export type OrdersResponse = {
+  orders: Order[];
 };
