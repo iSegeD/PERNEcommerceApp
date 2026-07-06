@@ -35,3 +35,7 @@ export type CategoriesResponse = {
 export type ProductsResponse = {
   products: Product[];
 };
+
+export type CheckoutResponse = {
+  checkoutUrl: string;
+};
