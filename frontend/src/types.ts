@@ -56,6 +56,10 @@ export type ProductsResponse = {
   products: Product[];
 };
 
+export type ProdcutBySlugResponse = {
+  product: Product;
+};
+
 export type CheckoutResponse = {
   checkoutUrl: string;
 };
