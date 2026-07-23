@@ -32,8 +32,7 @@ export type PreviewItems = {
   quantity: number;
 };
 
-type Order = {
-  previewItems: PreviewItems[];
+export type Order = {
   id: string;
   userId: string;
   status: OrderStatus;
@@ -42,6 +41,17 @@ type Order = {
   totalCents: number;
   createdAt: string;
   updatedAt: string;
+};
+
+export type OrderItem = {
+  id: string;
+  quantity: number;
+  unitPriceCents: number;
+  product: Product;
+};
+
+type OrderListItem = Order & {
+  previewItems: PreviewItems[];
 };
 
 export type MeResponse = {
@@ -56,7 +66,7 @@ export type ProductsResponse = {
   products: Product[];
 };
 
-export type ProdcutBySlugResponse = {
+export type ProductBySlugResponse = {
   product: Product;
 };
 
@@ -65,5 +75,10 @@ export type CheckoutResponse = {
 };
 
 export type OrdersResponse = {
-  orders: Order[];
+  orders: OrderListItem[];
+};
+
+export type OrderResponse = {
+  order: Order;
+  items: OrderItem[];
 };
