@@ -49,7 +49,7 @@ export const createStreamToken: RequestHandler = async (req, res, next) => {
 
     const token = server.createToken(streamId);
 
-    res.json({ token, apikey: env.STREAM_API_KEY, userId: streamId });
+    res.json({ token, apiKey: env.STREAM_API_KEY, userId: streamId, name});
   } catch (error: unknown) {
     next(error);
   }

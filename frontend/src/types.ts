@@ -82,3 +82,20 @@ export type OrderResponse = {
   order: Order;
   items: OrderItem[];
 };
+
+export type VideoInviteResponse = {
+  joinUrl: string;
+};
+
+export type StreamChannelResponse = {
+  channelType: string;
+  channelId: string;
+  streamUserId: string;
+};
+
+export type StreamTokenResponse = {
+  token: string;
+  apiKey: string;
+  userId: string;
+  name: string;
+};

@@ -10,6 +10,7 @@ import type { Order, OrderItem } from "../types";
 type OrderOutletContext = {
   order: Order;
   items: OrderItem[];
+  paid: boolean;
 };
 
 const OrderSummaryPage = () => {
