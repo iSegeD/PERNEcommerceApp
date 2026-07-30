@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as Sentry from "@sentry/react";
 
-import type { GetToken } from "@clerk/types";
+import type { GetToken } from "@clerk/react/types";
 
 const raw = import.meta.env.VITE_API_URL;
 const baseURL = typeof raw === "string" ? raw.replace(/\/+$/, "") : "";

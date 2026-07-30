@@ -1,8 +1,8 @@
+import { Routes, Route, Navigate } from "react-router";
 import { useAuth } from "@clerk/react";
 
 import PageLoader from "./components/PageLoader";
 import Layout from "./components/Layout";
-import { Routes, Route, Navigate } from "react-router";
 
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
@@ -13,6 +13,7 @@ import OrderDetailPage from "./pages/OrderDetailPage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
 import OrderChatPage from "./pages/OrderChatPage";
 import OrderVideoPage from "./pages/OrderVideoPage";
+import AdminProductsPage from "./pages/AdminProductsPage";
 
 function App() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -42,6 +43,8 @@ function App() {
             isSignedIn ? <OrderVideoPage /> : <Navigate to={"/"} replace />
           }
         />
+
+        <Route path="/admin" element={isSignedIn ? <AdminProductsPage /> : <Navigate to="/" replace/>}/>
       </Routes>
     </Layout>
   );

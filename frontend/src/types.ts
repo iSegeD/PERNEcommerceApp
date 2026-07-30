@@ -1,5 +1,5 @@
-export type UserRole = "customer" | "admin" | "support";
-export type OrderStatus = "pending" | "paid" | "failed";
+type UserRole = "customer" | "admin" | "support";
+type OrderStatus = "pending" | "paid" | "failed";
 
 type User = {
   id: string;
@@ -24,6 +24,12 @@ export type Product = {
   active: boolean;
   createdAt: string;
 };
+
+type ProductResponse = {
+  product: Product;
+};
+
+export type ProductBody = Omit<Product, "id" | "createdAt">;
 
 export type PreviewItems = {
   name: string;
@@ -66,9 +72,7 @@ export type ProductsResponse = {
   products: Product[];
 };
 
-export type ProductBySlugResponse = {
-  product: Product;
-};
+export type ProductBySlugResponse = ProductResponse;
 
 export type CheckoutResponse = {
   checkoutUrl: string;
@@ -99,3 +103,32 @@ export type StreamTokenResponse = {
   userId: string;
   name: string;
 };
+
+export type ImageKitAuthResponse = {
+  token: string;
+  expire: number;
+  signature: string;
+  publicKey: string;
+  urlEndpoint: string;
+};
+
+export type ImageKitUploadResponse = {
+  url: string;
+  fileId?: string;
+};
+
+export type CreateProductResponse = ProductResponse;
+
+export type UpdateProductByIdResponse = ProductResponse;
+
+export type SaveProductVariables =
+  | {
+      id?: undefined;
+      body: ProductBody;
+    }
+  | {
+      id: string;
+      body: Partial<ProductBody>;
+    };
+
+
