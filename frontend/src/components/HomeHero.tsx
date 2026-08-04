@@ -16,14 +16,14 @@ const HomeHero = ({ categories, loadingCategories }: Props) => {
       <div className="relative grid gap-8 p-8 md:grid-cols-2 md:items-center md:p-12 lg:p-14">
         <div className="text-left">
           <h1 className="text-3xl font-bold tracking-tight text-base-content md:text-4xl lg:text-5xl">
-            Hardware &amp; workspace,{" "}
-            <span className="text-primary">ready to ship</span>
+            Everyday tech essentials
+            <span className="block text-primary">built for life</span>
           </h1>
 
           <p className="mt-4 max-w-lg text-base leading-relaxed text-base-content/70">
-            Audio, wearables, workspace, and travel—curated for work and home.
-            Secure checkout; after payment, use your order page for support chat
-            and video.
+            Explore audio, wearables, desk essentials, and travel gear for
+            everyday use. Check out securely, then manage your order and contact
+            support by chat or video.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -41,7 +41,7 @@ const HomeHero = ({ categories, loadingCategories }: Props) => {
         <div className="grid gap-3">
           <div className="stat rounded-box border border-base-300 bg-base-100/80 px-4 py-3 shadow-sm">
             <div className="stat-title text-xs uppercase text-base-content/50">
-              Categories
+              Product Categories
             </div>
 
             <div className="stat-value text-2xl text-secondary">
@@ -55,13 +55,13 @@ const HomeHero = ({ categories, loadingCategories }: Props) => {
               )}
             </div>
 
-            <div className="stat-desc text-xs">Curated groups</div>
+            <div className="stat-desc text-xs">Collections to explore</div>
           </div>
 
           <div className="rounded-box border border-dashed border-primary/30 bg-primary/5 px-4 py-3">
             <div className="flex items-center gap-2 text-sm font-medium text-base-content">
               <SparklesIcon className="size-4 text-primary" aria-hidden />
-              Secure checkout · Priority support on paid orders
+              Secure payments • Order support when you need it
             </div>
           </div>
         </div>

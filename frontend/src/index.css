@@ -1,4 +1,18 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: forest --default;
+  themes: night --default;
+}
+
+@theme {
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }

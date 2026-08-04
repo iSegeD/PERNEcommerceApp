@@ -7,185 +7,196 @@ const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool);
 
 const CATALOG = [
+  // Mobile
   {
-    slug: "aurora-headphones",
-    name: "Aurora ANC Headphones",
-    category: "Audio",
+    slug: "everyday-smartphone",
+    name: "Everyday Smartphone",
+    category: "Mobile",
     description:
-      "Hybrid active noise cancellation, 40mm titanium drivers, 32-hour battery (ANC on), multipoint Bluetooth 5.3, fold-flat case included. Tuned for balanced mids — ideal for travel and focused work.",
-    priceCents: 24900,
+      "A modern smartphone with a bright display, fast performance, reliable cameras, and enough battery for a full day.",
+    priceCents: 59900,
     imageUrl:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+      "https://images.pexels.com/photos/10902918/pexels-photo-10902918.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    slug: "nova-watch",
-    name: "Nova Smart Watch Pro",
-    category: "Wearables",
+    slug: "11-inch-tablet",
+    name: "11-inch Tablet",
+    category: "Mobile",
     description:
-      'Always-on AMOLED 1.4", SpO₂ & ECG-ready sensors, sleep stages, 5 ATM swim-proof, 18-day battery in saver mode. GPS + GLONASS for outdoor workouts.',
-    priceCents: 19900,
+      "A lightweight tablet for watching videos, reading, browsing, studying, and handling everyday tasks.",
+    priceCents: 34900,
     imageUrl:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+      "https://images.pexels.com/photos/8533349/pexels-photo-8533349.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    slug: "pulse-speaker",
-    name: "Pulse Go Speaker",
-    category: "Audio",
+    slug: "phone-tripod",
+    name: "Phone Tripod",
+    category: "Mobile",
     description:
-      "360° sound with dual passive radiators, IP67 dust/water, 14h playtime, stereo pairing. USB-C fast charge — party-ready footprint.",
-    priceCents: 8900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80",
-  },
-  {
-    slug: "vertex-laptop-stand",
-    name: "Vertex Aluminum Stand",
-    category: "Workspace",
-    description:
-      'Ergonomic 6-step height, silicone pads, supports up to 10 kg. Folds flat for commute. Fits 11–17" laptops.',
-    priceCents: 7900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80",
-  },
-  {
-    slug: "lumen-keyboard",
-    name: "Lumen Mechanical Keyboard",
-    category: "Workspace",
-    description:
-      "Hot-swappable linear switches, PBT keycaps, gasket mount, tri-mode (USB-C / BT / 2.4G). Per-key RGB with onboard profiles.",
-    priceCents: 15900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80",
-  },
-  {
-    slug: "orbit-mouse",
-    name: "Orbit Ergo Mouse",
-    category: "Workspace",
-    description:
-      "Vertical 57° grip, silent main buttons, 4000 DPI sensor, 70-day battery, USB-C. Reduces wrist pronation during long sessions.",
-    priceCents: 6900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800&q=80",
-  },
-  {
-    slug: "cascade-monitor-lamp",
-    name: "Cascade Monitor Light Bar",
-    category: "Workspace",
-    description:
-      "Asymmetric optics avoid screen glare, RA>95, auto-dimming via ambient sensor. Touch controls + warm/cool CCT presets.",
-    priceCents: 9900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&q=80",
-  },
-  {
-    slug: "ember-kettle",
-    name: "Ember Smart Kettle",
-    category: "Home",
-    description:
-      "Variable temperature 40–100°C, keep-warm 2h, stainless interior, boil-dry protection. App scheduling (Wi‑Fi).",
-    priceCents: 12900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&q=80",
-  },
-  {
-    slug: "linen-air-purifier",
-    name: "Linen HEPA Air Purifier",
-    category: "Home",
-    description:
-      "CADR 350 m³/h, H13 HEPA + carbon, whisper 24 dB sleep mode, filter life indicator. Rooms up to 40 m².",
-    priceCents: 22900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80",
-  },
-  {
-    slug: "summit-backpack",
-    name: "Summit 28L Backpack",
-    category: "Travel",
-    description:
-      'Weatherproof shell, lay-flat laptop compartment (16"), luggage pass-through, recycled ripstop. 980 g.',
-    priceCents: 13900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
-  },
-  {
-    slug: "voyage-organizer",
-    name: "Voyage Tech Organizer",
-    category: "Travel",
-    description:
-      "Ripstop panels, elastic grids for cables & adapters, RFID pocket, slim profile for carry-on.",
-    priceCents: 4500,
-    imageUrl:
-      "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=800&q=80",
-  },
-  {
-    slug: "apex-mirrorless",
-    name: "Apex Mirrorless Body",
-    category: "Cameras",
-    description:
-      "24 MP BSI sensor, 4K60 10-bit internal, 5-axis IBIS, dual SD. Weather-sealed magnesium chassis — body only.",
-    priceCents: 149900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
-  },
-  {
-    slug: "prime-lens-35",
-    name: "Prime 35mm f/1.4",
-    category: "Cameras",
-    description:
-      "Nano-coated elements, linear AF motor, 0.25 m close focus, 67 mm filter thread. Street & low-light staple.",
-    priceCents: 79900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800&q=80",
-  },
-  {
-    slug: "nimbus-hub",
-    name: "Nimbus USB-C Hub",
-    category: "Accessories",
-    description:
-      "2× USB-A 10 Gbps, HDMI 2.1 4K120, SD/microSD UHS-II, 100 W PD passthrough. Aluminum unibody, braided cable.",
-    priceCents: 7900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800&q=80",
-  },
-  {
-    slug: "solstice-power-bank",
-    name: "Solstice 20K Power Bank",
-    category: "Accessories",
-    description:
-      "20000 mAh, 140 W PD PPS, dual USB-C + USB-A, airline-safe. OLED charge readout, soft-touch shell.",
-    priceCents: 8900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&q=80",
-  },
-  {
-    slug: "echo-earbuds",
-    name: "Echo True Wireless",
-    category: "Audio",
-    description:
-      "Adaptive ANC, spatial audio, 8h buds + 28h case, wireless charging. IPX4 sweat resistance.",
-    priceCents: 17900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&q=80",
-  },
-  {
-    slug: "meridian-desk-mat",
-    name: "Meridian Desk Mat XL",
-    category: "Workspace",
-    description:
-      "900×400 mm vegan leather surface, anti-slip base, stitched edges. Coffee & pen safe.",
-    priceCents: 5900,
-    imageUrl:
-      "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=800&q=80",
-  },
-  {
-    slug: "atlas-water-bottle",
-    name: "Atlas Insulated Bottle",
-    category: "Travel",
-    description:
-      "32 oz vacuum stainless, 24h cold / 12h hot, powder coat, leakproof chug cap + optional straw.",
+      "A compact adjustable tripod for taking photos, recording videos, joining calls, and creating content.",
     priceCents: 3900,
     imageUrl:
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80",
+      "https://images.pexels.com/photos/11809789/pexels-photo-11809789.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+
+  // Computers
+  {
+    slug: "14-inch-laptop",
+    name: "14-inch Laptop",
+    category: "Computers",
+    description:
+      "A slim everyday laptop suitable for work, studying, browsing, video calls, and entertainment.",
+    priceCents: 89900,
+    imageUrl:
+      "https://images.pexels.com/photos/15940010/pexels-photo-15940010.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "27-inch-monitor",
+    name: "27-inch Monitor",
+    category: "Computers",
+    description:
+      "A clear and spacious monitor for office work, studying, creative projects, and casual gaming.",
+    priceCents: 27900,
+    imageUrl:
+      "https://images.pexels.com/photos/1714340/pexels-photo-1714340.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "mini-desktop-computer",
+    name: "Mini Desktop Computer",
+    category: "Computers",
+    description:
+      "A compact desktop computer that provides reliable performance without taking up much desk space.",
+    priceCents: 54900,
+    imageUrl:
+      "https://images.pexels.com/photos/28297692/pexels-photo-28297692.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+
+  // Gaming
+  {
+    slug: "wireless-game-controller",
+    name: "Wireless Game Controller",
+    category: "Gaming",
+    description:
+      "A comfortable wireless controller with responsive buttons and a familiar layout for long gaming sessions.",
+    priceCents: 6900,
+    imageUrl:
+      "https://images.pexels.com/photos/16311110/pexels-photo-16311110.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "comfort-gaming-chair",
+    name: "Comfort Gaming Chair",
+    category: "Gaming",
+    description:
+      "An adjustable gaming chair with a high back, padded armrests, and comfortable support for longer sessions.",
+    priceCents: 24900,
+    imageUrl:
+      "https://images.unsplash.com/photo-1770195483917-b3bb444b7a29?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    slug: "usb-streaming-microphone",
+    name: "USB Streaming Microphone",
+    category: "Gaming",
+    description:
+      "A simple USB microphone for gaming, streaming, podcasts, voice recordings, and online meetings.",
+    priceCents: 11900,
+    imageUrl:
+      "https://images.pexels.com/photos/20461204/pexels-photo-20461204.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+
+  // Kitchen
+  {
+    slug: "home-espresso-machine",
+    name: "Home Espresso Machine",
+    category: "Kitchen",
+    description:
+      "A compact coffee machine for preparing espresso, cappuccino, and other café-style drinks at home.",
+    priceCents: 29900,
+    imageUrl:
+      "https://images.pexels.com/photos/6612626/pexels-photo-6612626.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "two-slice-toaster",
+    name: "Two-Slice Toaster",
+    category: "Kitchen",
+    description:
+      "A simple two-slice toaster with adjustable browning levels and easy-to-use controls.",
+    priceCents: 5900,
+    imageUrl:
+      "https://images.pexels.com/photos/7936648/pexels-photo-7936648.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "smoothie-blender",
+    name: "Smoothie Blender",
+    category: "Kitchen",
+    description:
+      "A practical kitchen blender for smoothies, sauces, soups, and everyday food preparation.",
+    priceCents: 8900,
+    imageUrl:
+      "https://images.pexels.com/photos/6824660/pexels-photo-6824660.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+
+  // Fitness
+  {
+    slug: "exercise-mat",
+    name: "Exercise Mat",
+    category: "Fitness",
+    description:
+      "A soft non-slip mat for stretching, yoga, home workouts, and floor exercises.",
+    priceCents: 3900,
+    imageUrl:
+      "https://images.pexels.com/photos/16143599/pexels-photo-16143599.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "resistance-band-set",
+    name: "Resistance Band Set",
+    category: "Fitness",
+    description:
+      "A lightweight set of exercise bands for strength training, stretching, and home workouts.",
+    priceCents: 2900,
+    imageUrl:
+      "https://images.unsplash.com/photo-1584827386916-b5351d3ba34b?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    slug: "massage-gun",
+    name: "Massage Gun",
+    category: "Fitness",
+    description:
+      "A portable massage device designed to relax tired muscles after exercise or a long working day.",
+    priceCents: 12900,
+    imageUrl:
+      "https://images.unsplash.com/photo-1755255020813-1cdb6a4bd9b0?q=80&w=1828&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+
+  // Smart Home
+  {
+    slug: "robot-vacuum",
+    name: "Robot Vacuum",
+    category: "Smart Home",
+    description:
+      "An automatic vacuum that handles everyday floor cleaning and returns to its charger when finished.",
+    priceCents: 32900,
+    imageUrl:
+      "https://images.pexels.com/photos/8566433/pexels-photo-8566433.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    slug: "smart-led-bulb",
+    name: "Smart LED Bulb",
+    category: "Smart Home",
+    description:
+      "An energy-saving LED bulb with adjustable brightness and convenient control from your phone.",
+    priceCents: 2400,
+    imageUrl:
+      "https://images.unsplash.com/photo-1532007271951-c487760934ae?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    slug: "indoor-security-camera",
+    name: "Indoor Security Camera",
+    category: "Smart Home",
+    description:
+      "A compact indoor camera for checking your home remotely and receiving motion notifications.",
+    priceCents: 7900,
+    imageUrl:
+      "https://images.pexels.com/photos/32769440/pexels-photo-32769440.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ];
 

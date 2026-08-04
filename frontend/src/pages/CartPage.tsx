@@ -86,8 +86,7 @@ const CartPage = () => {
                       </p>
                     ) : null}
                     <div className="mt-2 flex flex-wrap items-center gap-3">
-                      <span className="text-sm text-base-content/70">Qty</span>
-                      <div className="join border border-base-300">
+                      <div className="join">
                         <button
                           type="button"
                           className="btn btn-sm join-item gap-0 px-2.5"
@@ -103,7 +102,7 @@ const CartPage = () => {
                           <MinusIcon className="size-4" aria-hidden />
                         </button>
                         <span
-                          className="join-item flex min-w-10 items-center justify-center bg-base-200 px-3 text-sm font-medium tabular-nums text-base-content"
+                          className="join-item flex min-w-10 items-center justify-center bg-base-200 px-3 text-sm font-medium tabular-nums text-base-content border-0"
                           aria-live="polite"
                         >
                           {line.quantity}
@@ -190,9 +189,9 @@ const CartPage = () => {
                 aria-hidden
               />
               <span>
-                After payment, open your order for{" "}
-                <strong className="text-base-content">support chat</strong>.
-                Video invites appear in that thread.
+                Need help with a paid order? Open the order page to contact{" "}
+                <strong className="text-base-content">customer support</strong>{" "}
+                by chat. Video assistance may also be available there.
               </span>
             </p>
           </aside>

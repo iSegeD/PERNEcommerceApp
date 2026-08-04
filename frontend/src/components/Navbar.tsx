@@ -2,12 +2,12 @@ import { Show, SignInButton, useAuth, UserButton } from "@clerk/react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import {
-  StoreIcon,
   LogInIcon,
   PackageIcon,
   SettingsIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
+  CompassIcon,
 } from "lucide-react";
 
 import { apiFetch } from "../lib/api";
@@ -36,10 +36,10 @@ const Navbar = () => {
         <div className="flex-1">
           <Link
             to="/"
-            className="btn btn-ghost  gap-2 px-2 font-mono text-lg font-semibold uppercase tracking-wide md:text-lx"
+            className="btn btn-ghost bg-transparent border-0 gap-2 px-2 font-mono text-lg font-semibold uppercase tracking-wide md:text-lx"
           >
             <span className="flex size-10 items-center justify-center rounded-lg bg-primary/15 p-1 text-primary">
-              <StoreIcon className="size-8" aria-hidden />
+              <CompassIcon className="size-8" aria-hidden />
             </span>
             <span className="leading-none">Northshop</span>
           </Link>
@@ -95,7 +95,7 @@ const Navbar = () => {
           </Show>
 
           <Show when={"signed-in"}>
-            <div className="flex items-center gap-2 border-l border-base-300 pl-3">
+            <div className="flex items-center ml-4 gap-2 border-l border-base-300 pl-3">
               <UserButton
                 appearance={{
                   elements: { avatarBox: "h-10 w-10 ring-2 ring-base-300" },

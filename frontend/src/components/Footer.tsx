@@ -9,12 +9,11 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 font-semibold text-base-content">
               <TruckIcon className="size-8 text-primary" aria-hidden />
-              NorthShop Supply
+              NorthShop
             </div>
             <p className="mt-3 text-sm leading-relaxed text-base-content/65">
-              Curated hardware and workspace tools. Paid orders include priority
-              support; chat with our team and join a video call when we share a
-              link.
+              An educational e-commerce project demonstrating product browsing,
+              secure checkout, order management, and customer support features.
             </p>
           </div>
 
@@ -25,7 +24,7 @@ const Footer = () => {
             <ul className="mt-3 space-y-2 text-sm">
               <li>
                 <Link to="/" className="link link-hover text-base-content/80">
-                  All products
+                  Browse products
                 </Link>
               </li>
               <li>
@@ -33,7 +32,7 @@ const Footer = () => {
                   to="/cart"
                   className="link link-hover text-base-content/80"
                 >
-                  Cart
+                  Shopping cart
                 </Link>
               </li>
               <li>
@@ -41,7 +40,7 @@ const Footer = () => {
                   to="/orders"
                   className="link link-hover text-base-content/80"
                 >
-                  Orders
+                  My orders
                 </Link>
               </li>
             </ul>
@@ -49,7 +48,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-base-content/50">
-              Support
+              Order support
             </h3>
             <ul className="mt-3 space-y-2 text-sm text-base-content/70">
               <li className="flex items-start gap-2">
@@ -58,7 +57,8 @@ const Footer = () => {
                   aria-hidden
                 />
                 <span>
-                  Order-scoped chat after payment; video links shared in-thread.
+                  Support chat is available for paid orders. Video call links
+                  can also be shared in the same conversation.
                 </span>
               </li>
             </ul>
@@ -66,18 +66,21 @@ const Footer = () => {
 
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-base-content/50">
-              Company
+              About the project
             </h3>
             <p className="mt-3 text-sm text-base-content/65">
-              Built for teams who care about clear specs, fast fulfillment, and
-              human support when it matters.
+              Built as a portfolio project to demonstrate a complete shopping
+              flow, third-party integrations, and a responsive user interface.
             </p>
           </div>
         </div>
 
         <div className="mt-10 space-y-4 border-t border-base-300 pt-6">
-          <p className="text-center text-xs text-base-content/50">
-            © {new Date().getFullYear()} NorthShop Supply · All prices in EUR
+          <p className="text-center text-xs leading-relaxed text-base-content/50">
+            © {new Date().getFullYear()} This project was created solely for
+            educational and portfolio purposes and is not intended for
+            commercial use. Products, prices, and store content are shown for
+            demonstration only.
           </p>
         </div>
       </div>
