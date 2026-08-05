@@ -86,7 +86,7 @@ const Navbar = () => {
             <SignInButton mode="modal">
               <button
                 type="button"
-                className="btn btn-primary btn-sm gap-1.5 px-3 shadow-md"
+                className="btn btn-primary btn-sm ml-4 gap-1.5 px-3 shadow-md"
               >
                 <LogInIcon className="size-4 drop-shadow-sm" aria-hidden />
                 Sign in
