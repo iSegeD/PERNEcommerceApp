@@ -36,7 +36,7 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 
   try {
     await checkDatabaseHealth();
-    res.status(200).json({ status: 'ok', database: 'up' });
+    res.status(200).json({ status: 'ok.', database: 'up' });
   } catch {
     res.status(503).json({ status: 'error', database: 'down' });
   }
