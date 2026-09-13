@@ -26,8 +26,21 @@ import checkoutRouter from './routes/checkoutRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import orderRouter from './routes/orderRouter.js';
 
+import { checkDatabaseHealth } from './db/index.js';
+
 const env = getEnv();
 const app = express();
+
+app.get('/api/health', async (_req: Request, res: Response) => {
+  res.set('Cache-Control', 'no-store');
+
+  try {
+    await checkDatabaseHealth();
+    res.status(200).json({ status: 'ok', database: 'up' });
+  } catch {
+    res.status(503).json({ status: 'error', database: 'down' });
+  }
+});
 
 const rawJson = express.raw({ type: 'application/json', limit: '1mb' });
 
