@@ -1,5 +1,5 @@
 # --- Stage 1 ---
-FROM node:22-bookworm-slim AS frontend-build
+FROM node:24-bookworm-slim AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/ ./
 
@@ -11,7 +11,7 @@ RUN npm install --no-audit --no-fund \
   && npm run build
 
 # --- Stage 2 ---
-FROM node:22-bookworm-slim AS backend-build
+FROM node:24-bookworm-slim AS backend-build
 WORKDIR /app
 COPY backend/ ./
 RUN npm install --no-audit --no-fund \
@@ -19,7 +19,7 @@ RUN npm install --no-audit --no-fund \
 
 
 # --- Stage 3 ---
-FROM node:22-bookworm-slim AS runner
+FROM node:24-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
