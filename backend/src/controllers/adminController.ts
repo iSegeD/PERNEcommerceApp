@@ -134,7 +134,7 @@ export const createAdminProduct: RequestHandler = async (req, res, next) => {
     if (!parsed.success) {
       res
         .status(400)
-        .json({ error: "Invalid body", details: parsed.error.flatten() });
+        .json({ error: 'Invalid body', details: parsed.error.flatten() });
       return;
     }
 
