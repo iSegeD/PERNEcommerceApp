@@ -43,6 +43,10 @@ jobs:
             -t northshop .
       
       # TODO: Add E2E tests
+
+      - name: Trigger deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_E }}
       
   
   
