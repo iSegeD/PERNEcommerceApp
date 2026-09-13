@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useAuth } from "@clerk/react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from 'react';
+import { useAuth } from '@clerk/react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiFetch } from "../lib/api";
+import { apiFetch } from '../lib/api';
 
 import type {
   MeResponse,
@@ -11,7 +11,7 @@ import type {
   UpdateProductByIdResponse,
   SaveProductVariables,
   Product
-} from "../types";
+} from '../types';
 
 export const useAdminProductsPage = () => {
   const queryClient = useQueryClient();
@@ -22,17 +22,17 @@ export const useAdminProductsPage = () => {
   const [editing, setEditing] = useState<Product | null>(null);
 
   const { data: meData } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => apiFetch<MeResponse>("/api/me", { getToken }),
+    queryKey: ['me'],
+    queryFn: () => apiFetch<MeResponse>('/api/me', { getToken }),
     enabled: Boolean(isSignedIn),
   });
 
-  const isAdmin = meData?.user?.role === "admin";
+  const isAdmin = meData?.user?.role === 'admin';
 
   const { data, isLoading } = useQuery({
-    queryKey: ["admin", "products"],
+    queryKey: ['admin', 'products'],
     queryFn: () =>
-      apiFetch<ProductsResponse>("/api/admin/products", { getToken }),
+      apiFetch<ProductsResponse>('/api/admin/products', { getToken }),
     enabled: Boolean(isSignedIn) && isAdmin,
   });
 
@@ -43,23 +43,23 @@ export const useAdminProductsPage = () => {
           `/api/admin/products/${id}`,
           {
             getToken,
-            method: "PATCH",
+            method: 'PATCH',
             body,
           },
         );
       }
 
-      return apiFetch<CreateProductResponse>("/api/admin/products", {
+      return apiFetch<CreateProductResponse>('/api/admin/products', {
         getToken,
-        method: "POST",
+        method: 'POST',
         body,
       });
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["product-categories"] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product-categories'] });
 
       setModalOpen(false);
       setEditing(null);
@@ -70,17 +70,17 @@ export const useAdminProductsPage = () => {
     mutationFn: (productId: string) =>
       apiFetch<void>(`/api/admin/products/${productId}`, {
         getToken,
-        method: "DELETE",
+        method: 'DELETE',
       }),
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["product-categories"] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product-categories'] });
     },
 
     onError: (err) => {
-      window.alert(err instanceof Error ? err.message : "Delete failed");
+      window.alert(err instanceof Error ? err.message : 'Delete failed');
     },
   });
 

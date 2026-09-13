@@ -1,13 +1,13 @@
-import { useAuth } from "@clerk/react";
-import { useQuery } from "@tanstack/react-query";
+import { useAuth } from '@clerk/react';
+import { useQuery } from '@tanstack/react-query';
 
-import { useCart } from "../store/cart";
+import { useCart } from '../store/cart';
 
-import { apiFetch } from "../lib/api";
+import { apiFetch } from '../lib/api';
 
-import type { ProductsResponse, CheckoutResponse } from "../types";
+import type { ProductsResponse, CheckoutResponse } from '../types';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useCartPage = () => {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
@@ -22,8 +22,8 @@ export const useCartPage = () => {
     isLoading: productsLoading,
     isError: productsError,
   } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => apiFetch<ProductsResponse>("/api/products"),
+    queryKey: ['products'],
+    queryFn: () => apiFetch<ProductsResponse>('/api/products'),
     enabled: items.length > 0,
   });
 
@@ -52,9 +52,9 @@ export const useCartPage = () => {
       })),
     };
 
-    const res = await apiFetch<CheckoutResponse>("/api/checkout", {
+    const res = await apiFetch<CheckoutResponse>('/api/checkout', {
       getToken,
-      method: "POST",
+      method: 'POST',
       body,
     });
 

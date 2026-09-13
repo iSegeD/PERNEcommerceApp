@@ -1,13 +1,13 @@
-import { type RequestHandler } from "express";
-import { getAuth, clerkClient } from "@clerk/express";
+import { type RequestHandler } from 'express';
+import { getAuth, clerkClient } from '@clerk/express';
 
-import { getLocalUser } from "../lib/users.js";
+import { getLocalUser } from '../lib/users.js';
 import {
   getStreamChatServer,
   streamChatDisplayName,
   streamUserId,
-} from "../lib/stream.js";
-import { getEnv } from "../lib/env.js";
+} from '../lib/stream.js';
+import { getEnv } from '../lib/env.js';
 
 const env = getEnv();
 
@@ -16,14 +16,14 @@ export const createStreamToken: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
     const localUser = await getLocalUser(userId);
 
     if (!localUser) {
-      res.status(503).json({ error: "Account not synced yet" });
+      res.status(503).json({ error: 'Account not synced yet' });
       return;
     }
 
@@ -32,7 +32,7 @@ export const createStreamToken: RequestHandler = async (req, res, next) => {
     const clerkUser = await clerkClient.users.getUser(userId);
 
     const combineName =
-      [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(" ") ||
+      [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') ||
       null;
 
     const name = streamChatDisplayName(

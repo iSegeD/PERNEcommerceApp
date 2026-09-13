@@ -1,5 +1,5 @@
-type UserRole = "customer" | "admin" | "support";
-type OrderStatus = "pending" | "paid" | "failed";
+type UserRole = 'customer' | 'admin' | 'support';
+type OrderStatus = 'pending' | 'paid' | 'failed';
 
 type User = {
   id: string;
@@ -29,7 +29,7 @@ type ProductResponse = {
   product: Product;
 };
 
-export type ProductBody = Omit<Product, "id" | "createdAt">;
+export type ProductBody = Omit<Product, 'id' | 'createdAt'>;
 
 export type PreviewItems = {
   name: string;

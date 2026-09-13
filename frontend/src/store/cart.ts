@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type CartItem = {
   productId: string;
@@ -61,6 +61,6 @@ export const useCart = create<CartStore>()(
         set({ items: [] });
       },
     }),
-    { name: "nordshop-cart" },
+    { name: 'nordshop-cart' },
   ),
 );

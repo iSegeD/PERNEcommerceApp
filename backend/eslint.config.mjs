@@ -10,7 +10,9 @@ export default tseslint.config({
   ],
   languageOptions: {
     parserOptions: {
-      projectService: true,
+      projectService: {
+        allowDefaultProject: ["drizzle.config.ts", "scripts/seed.ts"],
+      },
       tsconfigRootDir: import.meta.dirname,
     },
   },
@@ -19,6 +21,7 @@ export default tseslint.config({
   },
   rules: {
     "@stylistic/semi": "error",
+    "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
     "@typescript-eslint/no-unsafe-assignment": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/explicit-function-return-type": "off",

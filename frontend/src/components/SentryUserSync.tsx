@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useAuth } from "@clerk/react";
-import * as Sentry from "@sentry/react";
+import { useAuth } from '@clerk/react';
+import * as Sentry from '@sentry/react';
 
 export const SentryUserSync = () => {
   const { isLoaded, userId } = useAuth();

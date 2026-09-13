@@ -8,6 +8,7 @@
     "tsc": "tsc",
     "build": "tsc",
     "start": "node --import ./src/instrument.ts dist/index.js",
+    "lint": "eslint .",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts"
   },

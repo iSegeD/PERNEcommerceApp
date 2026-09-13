@@ -1,26 +1,26 @@
-import { type Request, type Response } from "express";
-import { getEnv } from "../lib/env.js";
-import { verifyWebhook } from "@clerk/backend/webhooks";
-import { parseRole } from "../lib/roles.js";
-import { db } from "../db/index.js";
-import { users } from "../db/schema.js";
-import { eq } from "drizzle-orm";
+import { type Request, type Response } from 'express';
+import { getEnv } from '../lib/env.js';
+import { verifyWebhook } from '@clerk/backend/webhooks';
+import { parseRole } from '../lib/roles.js';
+import { db } from '../db/index.js';
+import { users } from '../db/schema.js';
+import { eq } from 'drizzle-orm';
 
 export const clerkWebhookHandler = async (req: Request, res: Response) => {
   const env = getEnv();
 
   try {
     if (!env.CLERK_WEBHOOK_SECRET) {
-      res.status(503).json({ message: "Webhooks secret is not provided" });
+      res.status(503).json({ message: 'Webhooks secret is not provided' });
       return;
     }
 
     // Clerk's verifier expects a Web Request with the raw body. Express may give Buffer or string.
     const payload =
-      req.body instanceof Buffer ? req.body.toString("utf8") : String(req.body);
+      req.body instanceof Buffer ? req.body.toString('utf8') : String(req.body);
 
-    const request = new Request("http://internal/webhooks/clerk", {
-      method: "POST",
+    const request = new Request('http://internal/webhooks/clerk', {
+      method: 'POST',
       headers: new Headers(req.headers as HeadersInit),
       body: payload,
     });
@@ -29,7 +29,7 @@ export const clerkWebhookHandler = async (req: Request, res: Response) => {
       signingSecret: env.CLERK_WEBHOOK_SECRET,
     });
 
-    if (evt.type === "user.created" || evt.type === "user.updated") {
+    if (evt.type === 'user.created' || evt.type === 'user.updated') {
       const u = evt.data;
 
       const email =
@@ -38,7 +38,7 @@ export const clerkWebhookHandler = async (req: Request, res: Response) => {
         )?.email_address ?? u.email_addresses?.[0]?.email_address;
 
       const displayName =
-        [u.first_name, u.last_name].filter(Boolean).join(" ") ||
+        [u.first_name, u.last_name].filter(Boolean).join(' ') ||
         u.username ||
         null;
 
@@ -58,7 +58,7 @@ export const clerkWebhookHandler = async (req: Request, res: Response) => {
         });
     }
 
-    if (evt.type === "user.deleted") {
+    if (evt.type === 'user.deleted') {
       const id = evt.data.id;
 
       if (id) {
@@ -68,7 +68,7 @@ export const clerkWebhookHandler = async (req: Request, res: Response) => {
 
     res.json({ ok: true });
   } catch (error) {
-    console.error("Clerk webhook error", error);
-    res.status(400).json({ error: "Invalid webhook" });
+    console.error('Clerk webhook error', error);
+    res.status(400).json({ error: 'Invalid webhook' });
   }
 };

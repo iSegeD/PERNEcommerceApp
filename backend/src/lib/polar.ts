@@ -1,11 +1,11 @@
-import type { Env } from "./env.js";
+import type { Env } from './env.js';
 
 type CheckoutCreateBody = {
   products: string[];
   prices?: Record<
     string,
     Array<{
-      amount_type: "fixed";
+      amount_type: 'fixed';
       price_amount: number;
       price_currency: string;
     }>
@@ -22,13 +22,13 @@ export const polarCreateCheckout = async (
   body: CheckoutCreateBody,
 ) => {
   const token = env.POLAR_ACCESS_TOKEN;
-  if (!token) throw new Error("POLAR_ACCESS_TOKEN is not configured");
+  if (!token) throw new Error('POLAR_ACCESS_TOKEN is not configured');
 
   const res = await fetch(`${env.POLAR_API_BASE}/v1/checkouts/`, {
-    method: "POST",
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
   });

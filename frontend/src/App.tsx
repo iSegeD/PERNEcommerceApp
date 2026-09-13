@@ -1,19 +1,19 @@
-import { Routes, Route, Navigate } from "react-router";
-import { useAuth } from "@clerk/react";
+import { Routes, Route, Navigate } from 'react-router';
+import { useAuth } from '@clerk/react';
 
-import PageLoader from "./components/PageLoader";
-import Layout from "./components/Layout";
+import PageLoader from './components/PageLoader';
+import Layout from './components/Layout';
 
-import HomePage from "./pages/HomePage";
-import CartPage from "./pages/CartPage";
-import OrderPage from "./pages/OrderPage";
-import CheckoutReturnPage from "./pages/CheckoutReturnPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
-import OrderDetailPage from "./pages/OrderDetailPage";
-import OrderSummaryPage from "./pages/OrderSummaryPage";
-import OrderChatPage from "./pages/OrderChatPage";
-import OrderVideoPage from "./pages/OrderVideoPage";
-import AdminProductsPage from "./pages/AdminProductsPage";
+import HomePage from './pages/HomePage';
+import CartPage from './pages/CartPage';
+import OrderPage from './pages/OrderPage';
+import CheckoutReturnPage from './pages/CheckoutReturnPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import OrderDetailPage from './pages/OrderDetailPage';
+import OrderSummaryPage from './pages/OrderSummaryPage';
+import OrderChatPage from './pages/OrderChatPage';
+import OrderVideoPage from './pages/OrderVideoPage';
+import AdminProductsPage from './pages/AdminProductsPage';
 
 function App() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -23,28 +23,28 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/product/:slug" element={<ProductDetailPage />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/cart' element={<CartPage />} />
+        <Route path='/product/:slug' element={<ProductDetailPage />} />
         <Route
-          path="/orders"
-          element={isSignedIn ? <OrderPage /> : <Navigate to={"/"} replace />}
+          path='/orders'
+          element={isSignedIn ? <OrderPage /> : <Navigate to={'/'} replace />}
         />
-        <Route path="/checkout/return" element={<CheckoutReturnPage />} />
+        <Route path='/checkout/return' element={<CheckoutReturnPage />} />
 
-        <Route path="/orders/:id" element={<OrderDetailPage />}>
+        <Route path='/orders/:id' element={<OrderDetailPage />}>
           <Route index element={<OrderSummaryPage />} />
-          <Route path="chat" element={<OrderChatPage />} />
+          <Route path='chat' element={<OrderChatPage />} />
         </Route>
 
         <Route
-          path="/orders/:id/call"
+          path='/orders/:id/call'
           element={
-            isSignedIn ? <OrderVideoPage /> : <Navigate to={"/"} replace />
+            isSignedIn ? <OrderVideoPage /> : <Navigate to={'/'} replace />
           }
         />
 
-        <Route path="/admin" element={isSignedIn ? <AdminProductsPage /> : <Navigate to="/" replace/>}/>
+        <Route path='/admin' element={isSignedIn ? <AdminProductsPage /> : <Navigate to='/' replace/>}/>
       </Routes>
     </Layout>
   );

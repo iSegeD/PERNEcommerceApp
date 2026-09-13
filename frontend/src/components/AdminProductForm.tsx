@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { uploadImageToImageKit } from "../lib/imagekitUpload";
-import { IK_PRESETS, imageKitOptimizedUrl } from "../lib/imageKitUrl";
+import React, { useState } from 'react';
+import { uploadImageToImageKit } from '../lib/imagekitUpload';
+import { IK_PRESETS, imageKitOptimizedUrl } from '../lib/imageKitUrl';
 
-import type { GetToken } from "@clerk/react/types";
+import type { GetToken } from '@clerk/react/types';
 
-import type { Product, ProductBody } from "../types";
+import type { Product, ProductBody } from '../types';
 
 type Props = {
   initial: Product | null;
@@ -23,17 +23,17 @@ const AdminProductForm = ({
   onCancel,
   onSubmit,
 }: Props) => {
-  const [slug, setSlug] = useState(initial?.slug ?? "");
-  const [name, setName] = useState(initial?.name ?? "");
-  const [category, setCategory] = useState(initial?.category ?? "All");
-  const [description, setDescription] = useState(initial?.description ?? "");
+  const [slug, setSlug] = useState(initial?.slug ?? '');
+  const [name, setName] = useState(initial?.name ?? '');
+  const [category, setCategory] = useState(initial?.category ?? 'All');
+  const [description, setDescription] = useState(initial?.description ?? '');
   const [priceCents, setPriceCents] = useState(
-    initial ? String(initial.priceCents / 100) : "",
+    initial ? String(initial.priceCents / 100) : '',
   );
-  const [currency, setCurrency] = useState(initial?.currency ?? "eur");
-  const [imageUrl, setImageUrl] = useState(initial?.imageUrl ?? "");
+  const [currency, setCurrency] = useState(initial?.currency ?? 'eur');
+  const [imageUrl, setImageUrl] = useState(initial?.imageUrl ?? '');
   const [imageKitFileId, setImageKitFileId] = useState(
-    initial?.imageKitFileId ?? "",
+    initial?.imageKitFileId ?? '',
   );
   const [active, setActive] = useState(initial?.active ?? true);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -47,7 +47,7 @@ const AdminProductForm = ({
     const body = {
       slug: slug.trim(),
       name: name.trim(),
-      category: category.trim() || "All",
+      category: category.trim() || 'All',
       description: description.trim(),
       priceCents: Math.round(euros * 100),
       currency: currency.trim().toLowerCase(),
@@ -59,14 +59,14 @@ const AdminProductForm = ({
     if (initial) {
       const patch: Partial<ProductBody> = {};
       if (body.name !== initial.name) patch.name = body.name;
-      if (body.category !== (initial.category ?? "All"))
+      if (body.category !== (initial.category ?? 'All'))
         patch.category = body.category;
       if (body.description !== initial.description)
         patch.description = body.description;
       if (body.priceCents !== initial.priceCents)
         patch.priceCents = body.priceCents;
       if (body.currency !== initial.currency) patch.currency = body.currency;
-      if ((body.imageUrl ?? "") !== (initial.imageUrl ?? ""))
+      if ((body.imageUrl ?? '') !== (initial.imageUrl ?? ''))
         patch.imageUrl = body.imageUrl;
       if ((body.imageKitFileId ?? null) !== (initial.imageKitFileId ?? null)) {
         patch.imageKitFileId = body.imageKitFileId;
@@ -84,21 +84,21 @@ const AdminProductForm = ({
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    e.target.value = "";
+    e.target.value = '';
     if (!file) return;
 
     setUploadError(null);
 
     if (file.size > 10 * 1024 * 1024) {
-      setUploadError("File is too large (max 10MB).");
+      setUploadError('File is too large (max 10MB).');
       return;
     }
 
-    const ext = file.name.includes(".")
-      ? file.name.slice(file.name.lastIndexOf("."))
-      : ".jpg";
-    const base = (slug.trim() || "product")
-      .replace(/[^\w-]+/g, "-")
+    const ext = file.name.includes('.')
+      ? file.name.slice(file.name.lastIndexOf('.'))
+      : '.jpg';
+    const base = (slug.trim() || 'product')
+      .replace(/[^\w-]+/g, '-')
       .slice(0, 80);
 
     setUploadingImage(true);
@@ -109,20 +109,20 @@ const AdminProductForm = ({
       });
 
       setImageUrl(url);
-      setImageKitFileId(fileId ?? "");
+      setImageKitFileId(fileId ?? '');
     } catch (err) {
-      setUploadError(err instanceof Error ? err.message : "Upload failed");
+      setUploadError(err instanceof Error ? err.message : 'Upload failed');
     } finally {
       setUploadingImage(false);
     }
   };
 
   return (
-    <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
-      <label className="form-control w-full">
-        <span className="label-text">Slug</span>
+    <form className='mt-4 flex flex-col gap-3' onSubmit={handleSubmit}>
+      <label className='form-control w-full'>
+        <span className='label-text'>Slug</span>
         <input
-          className="input input-bordered w-full"
+          className='input input-bordered w-full'
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
           required
@@ -130,54 +130,54 @@ const AdminProductForm = ({
         />
       </label>
 
-      <label className="form-control w-full">
-        <span className="label-text">Name</span>
+      <label className='form-control w-full'>
+        <span className='label-text'>Name</span>
         <input
-          className="input input-bordered w-full"
+          className='input input-bordered w-full'
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
       </label>
 
-      <label className="form-control w-full">
-        <span className="label-text">Category</span>
+      <label className='form-control w-full'>
+        <span className='label-text'>Category</span>
         <input
-          className="input input-bordered w-full"
+          className='input input-bordered w-full'
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="e.g. Audio, Workspace"
+          placeholder='e.g. Audio, Workspace'
           required
         />
       </label>
 
-      <label className="form-control w-full">
-        <span className="label-text">Description</span>
+      <label className='form-control w-full'>
+        <span className='label-text'>Description</span>
         <textarea
-          className="textarea textarea-bordered h-24 w-full"
+          className='textarea textarea-bordered h-24 w-full'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </label>
 
-      <div className="grid grid-cols-2 gap-2">
-        <label className="form-control">
-          <span className="label-text">Price (EUR)</span>
+      <div className='grid grid-cols-2 gap-2'>
+        <label className='form-control'>
+          <span className='label-text'>Price (EUR)</span>
           <input
-            className="input input-bordered"
-            type="number"
-            step="0.01"
-            min="0.01"
+            className='input input-bordered'
+            type='number'
+            step='0.01'
+            min='0.01'
             value={priceCents}
             onChange={(e) => setPriceCents(e.target.value)}
             required
           />
         </label>
 
-        <label className="form-control">
-          <span className="label-text">Currency</span>
+        <label className='form-control'>
+          <span className='label-text'>Currency</span>
           <input
-            className="input input-bordered"
+            className='input input-bordered'
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
             required
@@ -185,94 +185,94 @@ const AdminProductForm = ({
         </label>
       </div>
 
-      <div className="form-control w-full">
-        <span className="label-text">Image</span>
-        <label className="mb-2 flex cursor-pointer flex-wrap items-center gap-2">
-          <span className="btn btn-secondary btn-sm shrink-0">
+      <div className='form-control w-full'>
+        <span className='label-text'>Image</span>
+        <label className='mb-2 flex cursor-pointer flex-wrap items-center gap-2'>
+          <span className='btn btn-secondary btn-sm shrink-0'>
             {uploadingImage ? (
-              <span className="loading loading-spinner loading-xs" />
+              <span className='loading loading-spinner loading-xs' />
             ) : (
-              "Upload to ImageKit"
+              'Upload to ImageKit'
             )}
           </span>
 
-          <span className="text-xs text-base-content/60">
+          <span className='text-xs text-base-content/60'>
             PNG, JPG, WebP, GIF · max 10MB
           </span>
 
           <input
-            type="file"
-            accept="image/png,image/jpeg,image/webp,image/gif"
-            className="hidden"
+            type='file'
+            accept='image/png,image/jpeg,image/webp,image/gif'
+            className='hidden'
             disabled={uploadingImage || saving}
             onChange={handleImageUpload}
           />
         </label>
 
-        <label className="label py-0">
-          <span className="label-text-alt text-base-content/60">
+        <label className='label py-0'>
+          <span className='label-text-alt text-base-content/60'>
             Image URL (any HTTPS URL)
           </span>
         </label>
 
         <input
-          className="input input-bordered w-full"
-          type="url"
+          className='input input-bordered w-full'
+          type='url'
           value={imageUrl}
           onChange={(e) => {
             const v = e.target.value;
-            if (v !== imageUrl) setImageKitFileId("");
+            if (v !== imageUrl) setImageKitFileId('');
             setImageUrl(v);
           }}
-          placeholder="https://..."
+          placeholder='https://...'
         />
 
         {uploadError ? (
-          <span className="mt-1 text-xs text-error" role="alert">
+          <span className='mt-1 text-xs text-error' role='alert'>
             {uploadError}
           </span>
         ) : null}
         {imageUrl ? (
-          <div className="mt-2 overflow-hidden rounded-lg border border-base-300 bg-base-200 p-2">
+          <div className='mt-2 overflow-hidden rounded-lg border border-base-300 bg-base-200 p-2'>
             <img
               src={imageKitOptimizedUrl(imageUrl, IK_PRESETS.formPreview)}
-              alt=""
-              className="mx-auto max-h-32 w-auto object-contain"
-              decoding="async"
+              alt=''
+              className='mx-auto max-h-32 w-auto object-contain'
+              decoding='async'
             />
           </div>
         ) : null}
       </div>
 
-      <label className="label cursor-pointer justify-start gap-3">
+      <label className='label cursor-pointer justify-start gap-3'>
         <input
-          type="checkbox"
-          className="toggle toggle-primary"
+          type='checkbox'
+          className='toggle toggle-primary'
           checked={active}
           onChange={(e) => setActive(e.target.checked)}
         />
-        <span className="label-text">Active in store</span>
+        <span className='label-text'>Active in store</span>
       </label>
 
       {error ? (
-        <div role="alert" className="alert alert-error text-sm">
+        <div role='alert' className='alert alert-error text-sm'>
           Save failed (check slug unique &amp; fields).
         </div>
       ) : null}
 
-      <div className="modal-action">
-        <button type="button" className="btn btn-ghost" onClick={onCancel}>
+      <div className='modal-action'>
+        <button type='button' className='btn btn-ghost' onClick={onCancel}>
           Cancel
         </button>
         <button
-          type="submit"
-          className="btn btn-primary"
+          type='submit'
+          className='btn btn-primary'
           disabled={saving || uploadingImage}
         >
           {saving ? (
-            <span className="loading loading-spinner loading-sm" />
+            <span className='loading loading-spinner loading-sm' />
           ) : (
-            "Save"
+            'Save'
           )}
         </button>
       </div>

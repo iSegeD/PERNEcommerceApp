@@ -1,19 +1,19 @@
-import { type RequestHandler } from "express";
-import { getAuth } from "@clerk/express";
+import { type RequestHandler } from 'express';
+import { getAuth } from '@clerk/express';
 
-import { getLocalUser } from "../lib/users.js";
-import { isStaff } from "../lib/roles.js";
+import { getLocalUser } from '../lib/users.js';
+import { isStaff } from '../lib/roles.js';
 import {
   getStreamChatServer,
   streamChatDisplayName,
   streamUserId,
-} from "../lib/stream.js";
-import { getEnv } from "../lib/env.js";
+} from '../lib/stream.js';
+import { getEnv } from '../lib/env.js';
 
-import { db } from "../db/index.js";
-import { orderItems, orders, products, users } from "../db/schema.js";
+import { db } from '../db/index.js';
+import { orderItems, orders, products, users } from '../db/schema.js';
 
-import { eq, desc, asc, inArray } from "drizzle-orm";
+import { eq, desc, asc, inArray } from 'drizzle-orm';
 
 const env = getEnv();
 
@@ -29,14 +29,14 @@ export const listOrders: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
     const localUser = await getLocalUser(userId);
 
     if (!localUser) {
-      res.status(503).json({ error: "Account not synced yet" });
+      res.status(503).json({ error: 'Account not synced yet' });
       return;
     }
 
@@ -96,14 +96,14 @@ export const getOrder: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
     const localUser = await getLocalUser(userId);
 
     if (!localUser) {
-      res.status(503).json({ error: "Account not synced yet" });
+      res.status(503).json({ error: 'Account not synced yet' });
       return;
     }
 
@@ -114,14 +114,14 @@ export const getOrder: RequestHandler = async (req, res, next) => {
       .limit(1);
 
     if (!order) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
     const canAccess = order.userId === localUser.id || isStaff(localUser.role);
 
     if (!canAccess) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
@@ -147,7 +147,7 @@ export const createStreamChannel: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
@@ -156,7 +156,7 @@ export const createStreamChannel: RequestHandler = async (req, res, next) => {
     const localUser = await getLocalUser(userId);
 
     if (!localUser) {
-      res.status(503).json({ error: "Account not synced yet" });
+      res.status(503).json({ error: 'Account not synced yet' });
       return;
     }
 
@@ -167,21 +167,21 @@ export const createStreamChannel: RequestHandler = async (req, res, next) => {
       .limit(1);
 
     if (!order) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
     const isOwner = order.userId === localUser.id;
 
     if (!isOwner && !isStaff(localUser.role)) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
-    if (order.status !== "paid") {
+    if (order.status !== 'paid') {
       res
         .status(403)
-        .json({ error: "Order must be paid to open support chat" });
+        .json({ error: 'Order must be paid to open support chat' });
       return;
     }
 
@@ -198,7 +198,7 @@ export const createStreamChannel: RequestHandler = async (req, res, next) => {
 
     const channelId = `order-${order.id}`;
 
-    const channel = server.channel("messaging", channelId, {
+    const channel = server.channel('messaging', channelId, {
       name: `Support · order ${order.id.slice(0, 8)}`,
       created_by_id: streamChatUserId,
     });
@@ -208,7 +208,7 @@ export const createStreamChannel: RequestHandler = async (req, res, next) => {
     await channel.addMembers([streamChatUserId]);
 
     res.status(200).json({
-      channelType: "messaging",
+      channelType: 'messaging',
       channelId,
       streamUserId: streamChatUserId,
     });
@@ -222,7 +222,7 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
@@ -231,14 +231,14 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
     const localUser = await getLocalUser(userId);
 
     if (!localUser) {
-      res.status(503).json({ error: "Account not synced yet" });
+      res.status(503).json({ error: 'Account not synced yet' });
       return;
     }
 
     if (!isStaff(localUser.role)) {
       res
         .status(403)
-        .json({ error: "Only support or admin can send a video invite" });
+        .json({ error: 'Only support or admin can send a video invite' });
       return;
     }
 
@@ -248,8 +248,8 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
       .where(eq(orders.id, req.params.id as string))
       .limit(1);
 
-    if (!order || order.status !== "paid") {
-      res.status(404).json({ error: "Order not found or not paid" });
+    if (!order || order.status !== 'paid') {
+      res.status(404).json({ error: 'Order not found or not paid' });
       return;
     }
 
@@ -260,14 +260,14 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
       .limit(1);
 
     if (!owner) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
     const customerStreamId = streamUserId(owner.clerkUserId);
     await server.upsertUser({
       id: customerStreamId,
-      name: owner.displayName ?? owner.email ?? "Customer",
+      name: owner.displayName ?? owner.email ?? 'Customer',
     });
 
     const staffStreamUserId = streamUserId(userId);
@@ -281,7 +281,7 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
     });
 
     const channelId = `order-${order.id}`;
-    const channel = server.channel("messaging", channelId, {
+    const channel = server.channel('messaging', channelId, {
       name: `Support · order ${order.id.slice(0, 8)}`,
       created_by_id: customerStreamId,
     });
@@ -289,7 +289,7 @@ export const createVideoInvite: RequestHandler = async (req, res, next) => {
     await channel.create();
     await channel.addMembers([customerStreamId, staffStreamUserId]);
 
-    const joinUrl = `${env.FRONTEND_URL.replace(/\/+$/, "")}/orders/${order.id}/call`;
+    const joinUrl = `${env.FRONTEND_URL.replace(/\/+$/, '')}/orders/${order.id}/call`;
 
     await channel.sendMessage({
       text: `Video call - tap Join below (same link for everyone): ${joinUrl}`,

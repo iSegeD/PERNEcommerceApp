@@ -1,18 +1,18 @@
-import { type RequestHandler } from "express";
-import { getAuth } from "@clerk/express";
-import z from "zod";
+import { type RequestHandler } from 'express';
+import { getAuth } from '@clerk/express';
+import z from 'zod';
 
-import { getEnv } from "../lib/env.js";
-import { getLocalUser } from "../lib/users.js";
+import { getEnv } from '../lib/env.js';
+import { getLocalUser } from '../lib/users.js';
 
 import {
   checkOutSessions,
   products,
   type CheckOutSessionLine,
-} from "../db/schema.js";
-import { db } from "../db/index.js";
-import { eq, and, inArray } from "drizzle-orm";
-import { polarCreateCheckout } from "../lib/polar.js";
+} from '../db/schema.js';
+import { db } from '../db/index.js';
+import { eq, and, inArray } from 'drizzle-orm';
+import { polarCreateCheckout } from '../lib/polar.js';
 
 const env = getEnv();
 
@@ -32,7 +32,7 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
@@ -41,18 +41,18 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
     if (!parsedData.success) {
       res
         .status(400)
-        .json({ error: "Invalid cart", details: parsedData.error.flatten() });
+        .json({ error: 'Invalid cart', details: parsedData.error.flatten() });
       return;
     }
 
     if (!env.POLAR_ACCESS_TOKEN) {
-      res.status(503).json({ error: "Payments are not configured" });
+      res.status(503).json({ error: 'Payments are not configured' });
       return;
     }
 
     const localUser = await getLocalUser(userId);
     if (!localUser) {
-      res.status(503).json({ errro: "Account not synced yet" });
+      res.status(503).json({ errro: 'Account not synced yet' });
       return;
     }
 
@@ -64,7 +64,7 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
       .where(and(inArray(products.id, ids), eq(products.active, true)));
 
     if (prodRows.length !== ids.length) {
-      res.status(400).json({ error: "One or more products are invalid" });
+      res.status(400).json({ error: 'One or more products are invalid' });
       return;
     }
 
@@ -89,7 +89,7 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
     if (totalCents < 10) {
       res.status(400).json({
         error:
-          "Total below Polar minimum (e.g. EUR requires at least 10 cents)",
+          'Total below Polar minimum (e.g. EUR requires at least 10 cents)',
       });
       return;
     }
@@ -100,12 +100,12 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
         userId: localUser.id,
         lines,
         totalCents,
-        currency: "eur",
+        currency: 'eur',
       })
       .returning();
 
     if (!session) {
-      res.status(500).json({ error: "Failed to create ckecout session" });
+      res.status(500).json({ error: 'Failed to create ckecout session' });
       return;
     }
 
@@ -117,8 +117,8 @@ export const createCheckout: RequestHandler = async (req, res, next) => {
       prices: {
         [env.POLAR_CHECKOUT_PRODUCTION_ID]: [
           {
-            amount_type: "fixed",
-            price_currency: "eur",
+            amount_type: 'fixed',
+            price_currency: 'eur',
             price_amount: totalCents,
           },
         ],

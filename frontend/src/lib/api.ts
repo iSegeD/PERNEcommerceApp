@@ -1,10 +1,10 @@
-import axios from "axios";
-import * as Sentry from "@sentry/react";
+import axios from 'axios';
+import * as Sentry from '@sentry/react';
 
-import type { GetToken } from "@clerk/react/types";
+import type { GetToken } from '@clerk/react/types';
 
 const raw = import.meta.env.VITE_API_URL;
-const baseURL = typeof raw === "string" ? raw.replace(/\/+$/, "") : "";
+const baseURL = typeof raw === 'string' ? raw.replace(/\/+$/, '') : '';
 
 export const api = axios.create({
   baseURL,
@@ -12,12 +12,12 @@ export const api = axios.create({
 
 type ApiOptions = {
   getToken?: GetToken;
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
 };
 
 export const apiFetch = async <T>(path: string, options: ApiOptions = {}) => {
-  const { getToken, method = "GET", body } = options;
+  const { getToken, method = 'GET', body } = options;
 
   const headers: Record<string, string> = {};
 
@@ -38,31 +38,31 @@ export const apiFetch = async <T>(path: string, options: ApiOptions = {}) => {
     });
 
     Sentry.addBreadcrumb({
-      category: "api",
+      category: 'api',
       message: `${method} ${path}`,
-      level: "info",
+      level: 'info',
       data: { status: res.status },
     });
 
     return res.data as T;
   } catch (error: unknown) {
     Sentry.addBreadcrumb({
-      category: "api",
+      category: 'api',
       message: `${method} ${path}`,
-      level: "error",
+      level: 'error',
       data: {
         status: axios.isAxiosError(error) ? error.response?.status : undefined,
       },
     });
 
     Sentry.captureException(error, {
-      tags: { "api.fetch": "network" },
+      tags: { 'api.fetch': 'network' },
       extra: { path, method },
     });
 
     if (axios.isAxiosError(error)) {
       const message =
-        typeof error.response?.data?.error === "string"
+        typeof error.response?.data?.error === 'string'
           ? error.response.data.error
           : error.message;
 

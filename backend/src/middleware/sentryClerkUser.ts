@@ -1,6 +1,6 @@
-import { type RequestHandler } from "express";
-import * as Sentry from "@sentry/node";
-import { getAuth } from "@clerk/express";
+import { type RequestHandler } from 'express';
+import * as Sentry from '@sentry/node';
+import { getAuth } from '@clerk/express';
 
 // Attach Clerk user id to the request isolation scope so errors include who was signed in
 export const sentryClerkUserMiddleware: RequestHandler = (req, _res, next) => {

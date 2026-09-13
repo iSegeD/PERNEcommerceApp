@@ -1,0 +1,26 @@
+{
+  "name": "pernecommerceapp",
+  "version": "1.0.0",
+  "description": "A full-stack e-commerce application built with the **PERN stack** as a practical project for learning modern application architecture and third-party service integrations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "lint": "npm --prefix frontend run lint && npm --prefix backend run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iSegeD/PERNEcommerceApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iSegeD/PERNEcommerceApp/issues"
+  },
+  "homepage": "https://github.com/iSegeD/PERNEcommerceApp#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

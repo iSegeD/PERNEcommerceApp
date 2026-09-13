@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useAuth } from "@clerk/react";
-import { useQuery } from "@tanstack/react-query";
-import { StreamVideoClient, type Call } from "@stream-io/video-react-sdk";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { useAuth } from '@clerk/react';
+import { useQuery } from '@tanstack/react-query';
+import { StreamVideoClient, type Call } from '@stream-io/video-react-sdk';
 
-import { apiFetch } from "../lib/api";
+import { apiFetch } from '../lib/api';
 
-import type { OrderResponse, StreamTokenResponse } from "../types";
+import type { OrderResponse, StreamTokenResponse } from '../types';
 
 export const useOrderVideoPage = () => {
   const { id } = useParams();
@@ -21,13 +21,13 @@ export const useOrderVideoPage = () => {
     isLoading,
     error: loadError,
   } = useQuery({
-    queryKey: ["order", id],
+    queryKey: ['order', id],
     queryFn: () => apiFetch<OrderResponse>(`/api/orders/${id}`, { getToken }),
     enabled: Boolean(id) && isSignedIn,
   });
 
   const order = data?.order;
-  const paid = order?.status === "paid";
+  const paid = order?.status === 'paid';
 
   useEffect(() => {
     if (!paid || !id || !isSignedIn) return;
@@ -36,9 +36,9 @@ export const useOrderVideoPage = () => {
     let activeCall: Call | undefined;
 
     const connectOrderVideo = async () => {
-      const token = await apiFetch<StreamTokenResponse>("/api/stream/token", {
+      const token = await apiFetch<StreamTokenResponse>('/api/stream/token', {
         getToken,
-        method: "POST",
+        method: 'POST',
       });
 
       videoClient = new StreamVideoClient({
@@ -47,7 +47,7 @@ export const useOrderVideoPage = () => {
         token: token.token,
       });
 
-      activeCall = videoClient.call("default", `order-${id}`);
+      activeCall = videoClient.call('default', `order-${id}`);
 
       await activeCall.join({ create: true });
 
@@ -56,7 +56,7 @@ export const useOrderVideoPage = () => {
     };
 
     void connectOrderVideo().catch((e) => {
-      setError(e instanceof Error ? e.message : "Video failed to start");
+      setError(e instanceof Error ? e.message : 'Video failed to start');
     });
 
     return () => {

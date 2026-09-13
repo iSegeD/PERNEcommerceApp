@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 import {
   listOrders,
   getOrder,
   createStreamChannel,
   createVideoInvite,
-} from "../controllers/orderController.js";
+} from '../controllers/orderController.js';
 
 const router = Router();
 
-router.get("/", listOrders);
-router.get("/:id", getOrder);
-router.post("/:id/stream-channel", createStreamChannel);
-router.post("/:id/video-invite", createVideoInvite);
+router.get('/', listOrders);
+router.get('/:id', getOrder);
+router.post('/:id/stream-channel', createStreamChannel);
+router.post('/:id/video-invite', createVideoInvite);
 
 export default router;

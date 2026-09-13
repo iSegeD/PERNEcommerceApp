@@ -1,7 +1,7 @@
-import { type RequestHandler } from "express";
-import { db } from "../db/index.js";
-import { products } from "../db/schema.js";
-import { eq, desc, and } from "drizzle-orm";
+import { type RequestHandler } from 'express';
+import { db } from '../db/index.js';
+import { products } from '../db/schema.js';
+import { eq, desc, and } from 'drizzle-orm';
 
 
 type ProductParams = {
@@ -11,7 +11,7 @@ type ProductParams = {
 export const listProducts: RequestHandler = async (req, res, next) => {
   try {
     const category =
-      typeof req.query.category === "string" ? req.query.category.trim() : "";
+      typeof req.query.category === 'string' ? req.query.category.trim() : '';
 
     const activeOnly = eq(products.active, true);
     const whereClause = category
@@ -60,7 +60,7 @@ export const getProductBySlug: RequestHandler<ProductParams> = async (
       .limit(1);
 
     if (!row || !row.active) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 

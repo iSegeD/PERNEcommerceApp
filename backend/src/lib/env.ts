@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const envSchema = z.object({
   NODE_ENV: z
-    .enum(["development", "production", "test"])
-    .default("development"),
+    .enum(['development', 'production', 'test'])
+    .default('development'),
   PORT: z.coerce.number().default(3001),
   DATABASE_URL: z.string().min(1),
 
@@ -15,7 +15,7 @@ const envSchema = z.object({
 
   POLAR_ACCESS_TOKEN: z.string().optional(),
   POLAR_WEBHOOK_SECRET: z.string().optional(),
-  POLAR_API_BASE: z.string().url().default("https://api.polar.sh"),
+  POLAR_API_BASE: z.string().url().default('https://api.polar.sh'),
   POLAR_CHECKOUT_PRODUCTION_ID: z.string().uuid(),
 
   STREAM_API_KEY: z.string().min(1),
@@ -34,10 +34,10 @@ export const loadEnv = () => {
   const parsed = envSchema.safeParse(process.env);
 
   if (!parsed.success) {
-    console.error("Environment validation failed:");
+    console.error('Environment validation failed:');
     console.error(parsed.error.flatten().fieldErrors);
 
-    throw new Error("Invalid environment variables");
+    throw new Error('Invalid environment variables');
   }
 
   return parsed.data;

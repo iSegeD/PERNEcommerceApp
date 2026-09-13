@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useOutletContext, useParams } from "react-router";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { StreamChat, type Channel as StreamChannel } from "stream-chat";
-import { useAuth } from "@clerk/react";
+import { useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { StreamChat, type Channel as StreamChannel } from 'stream-chat';
+import { useAuth } from '@clerk/react';
 
-import { apiFetch } from "../lib/api";
+import { apiFetch } from '../lib/api';
 
 import type {
   Order,
@@ -13,7 +13,7 @@ import type {
   VideoInviteResponse,
   StreamChannelResponse,
   StreamTokenResponse,
-} from "../types";
+} from '../types';
 
 type OrderOutletContext = {
   order: Order;
@@ -31,8 +31,8 @@ export const useOrderChatPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const { data: meData } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => apiFetch<MeResponse>("/api/me", { getToken }),
+    queryKey: ['me'],
+    queryFn: () => apiFetch<MeResponse>('/api/me', { getToken }),
     enabled: Boolean(isSignedIn),
   });
 
@@ -41,7 +41,7 @@ export const useOrderChatPage = () => {
   const inviteMutation = useMutation({
     mutationFn: () =>
       apiFetch<VideoInviteResponse>(`/api/orders/${id}/video-invite`, {
-        method: "POST",
+        method: 'POST',
         getToken,
       }),
   });
@@ -54,11 +54,11 @@ export const useOrderChatPage = () => {
     const connectOrderChat = async () => {
       const channelData = await apiFetch<StreamChannelResponse>(
         `/api/orders/${id}/stream-channel`,
-        { method: "POST", getToken },
+        { method: 'POST', getToken },
       );
 
-      const token = await apiFetch<StreamTokenResponse>("/api/stream/token", {
-        method: "POST",
+      const token = await apiFetch<StreamTokenResponse>('/api/stream/token', {
+        method: 'POST',
         getToken,
       });
 
@@ -80,7 +80,7 @@ export const useOrderChatPage = () => {
     };
 
     connectOrderChat().catch((e) => {
-      setError(e instanceof Error ? e.message : "Chat failed to load");
+      setError(e instanceof Error ? e.message : 'Chat failed to load');
     });
 
     return () => {
@@ -90,7 +90,7 @@ export const useOrderChatPage = () => {
     };
   }, [paid, id, getToken]);
 
-  const canInvite = role === "support" || role === "admin";
+  const canInvite = role === 'support' || role === 'admin';
 
   return { paid, client, error, channel, canInvite, inviteMutation };
 };

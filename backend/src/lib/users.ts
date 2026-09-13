@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
-import { db } from "../db/index.js";
-import { users } from "../db/schema.js";
+import { eq } from 'drizzle-orm';
+import { db } from '../db/index.js';
+import { users } from '../db/schema.js';
 
 
 export const getLocalUser = async (clerkUserId: string) => {

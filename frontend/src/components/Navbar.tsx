@@ -1,6 +1,6 @@
-import { Show, SignInButton, useAuth, UserButton } from "@clerk/react";
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router";
+import { Show, SignInButton, useAuth, UserButton } from '@clerk/react';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 import {
   LogInIcon,
   PackageIcon,
@@ -8,19 +8,19 @@ import {
   ShoppingBagIcon,
   ShoppingCartIcon,
   CompassIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { apiFetch } from "../lib/api";
+import { apiFetch } from '../lib/api';
 
-import type { MeResponse } from "../types";
-import { useCart } from "../store/cart";
+import type { MeResponse } from '../types';
+import { useCart } from '../store/cart';
 
 const Navbar = () => {
   const { getToken, isSignedIn } = useAuth();
 
   const { data } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => apiFetch<MeResponse>("/api/me", { getToken }),
+    queryKey: ['me'],
+    queryFn: () => apiFetch<MeResponse>('/api/me', { getToken }),
     enabled: isSignedIn,
   });
 
@@ -31,78 +31,78 @@ const Navbar = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-base-300 bg-base-100/95 shadow-sm backdrop-blur-md">
-      <div className="navbar mx-auto min-h-14 max-w-7xl px-4 py-2.5 md:px-6 md:py-3">
-        <div className="flex-1">
+    <header className='sticky top-0 z-50 border-b border-base-300 bg-base-100/95 shadow-sm backdrop-blur-md'>
+      <div className='navbar mx-auto min-h-14 max-w-7xl px-4 py-2.5 md:px-6 md:py-3'>
+        <div className='flex-1'>
           <Link
-            to="/"
-            className="btn btn-ghost bg-transparent border-0 gap-2 px-2 font-mono text-lg font-semibold uppercase tracking-wide md:text-lx"
+            to='/'
+            className='btn btn-ghost bg-transparent border-0 gap-2 px-2 font-mono text-lg font-semibold uppercase tracking-wide md:text-lx'
           >
-            <span className="flex size-10 items-center justify-center rounded-lg bg-primary/15 p-1 text-primary">
-              <CompassIcon className="size-8" aria-hidden />
+            <span className='flex size-10 items-center justify-center rounded-lg bg-primary/15 p-1 text-primary'>
+              <CompassIcon className='size-8' aria-hidden />
             </span>
-            <span className="leading-none">Northshop</span>
+            <span className='leading-none'>Northshop</span>
           </Link>
         </div>
 
-        <nav className="flex items-center gap-1 md:gap-1.5">
-          <Link to="/" className="btn btn-ghost gap-2 font-medium">
-            <ShoppingBagIcon className="size-6 opacity-90" aria-hidden />
-            <span className="hidden sm:inline">Shop</span>
+        <nav className='flex items-center gap-1 md:gap-1.5'>
+          <Link to='/' className='btn btn-ghost gap-2 font-medium'>
+            <ShoppingBagIcon className='size-6 opacity-90' aria-hidden />
+            <span className='hidden sm:inline'>Shop</span>
           </Link>
 
-          <Show when={"signed-in"}>
-            <Link to="/orders" className="btn btn-ghost gap-2 font-medium">
-              <PackageIcon className="size-6 opacity-90" aria-hidden />
-              <span className="hidden sm:inline">Orders</span>
+          <Show when={'signed-in'}>
+            <Link to='/orders' className='btn btn-ghost gap-2 font-medium'>
+              <PackageIcon className='size-6 opacity-90' aria-hidden />
+              <span className='hidden sm:inline'>Orders</span>
             </Link>
 
-            {role === "admin" ? (
+            {role === 'admin' ? (
               <Link
-                to="/admin"
-                className="btn btn-ghost gap-2 font-medium text-secondary"
+                to='/admin'
+                className='btn btn-ghost gap-2 font-medium text-secondary'
               >
-                <SettingsIcon className="size-6" aria-hidden />
-                <span className="hidden sm:inline">Admin</span>
+                <SettingsIcon className='size-6' aria-hidden />
+                <span className='hidden sm:inline'>Admin</span>
               </Link>
             ) : null}
           </Show>
 
           <Link
-            to="/cart"
-            className="btn btn-ghost gap-2 font-medium indicator"
-            aria-label={cartCount > 0 ? `Cart, ${cartCount} items` : "Cart"}
+            to='/cart'
+            className='btn btn-ghost gap-2 font-medium indicator'
+            aria-label={cartCount > 0 ? `Cart, ${cartCount} items` : 'Cart'}
           >
             {cartCount > 0 ? (
-              <span className="indicator-item badge badge-sm badge-primary min-w-2 px-1.5 font-sans text-xs tabular-nums">
-                {cartCount > 99 ? "99+" : cartCount}
+              <span className='indicator-item badge badge-sm badge-primary min-w-2 px-1.5 font-sans text-xs tabular-nums'>
+                {cartCount > 99 ? '99+' : cartCount}
               </span>
             ) : null}
-            <ShoppingCartIcon className="size-6 opacity-90" aria-hidden />
-            <span className="hidden sm:inline">Cart</span>
+            <ShoppingCartIcon className='size-6 opacity-90' aria-hidden />
+            <span className='hidden sm:inline'>Cart</span>
           </Link>
 
-          <Show when={"signed-out"}>
-            <SignInButton mode="modal">
+          <Show when={'signed-out'}>
+            <SignInButton mode='modal'>
               <button
-                type="button"
-                className="btn btn-primary btn-sm ml-4 gap-1.5 px-3 shadow-md"
+                type='button'
+                className='btn btn-primary btn-sm ml-4 gap-1.5 px-3 shadow-md'
               >
-                <LogInIcon className="size-4 drop-shadow-sm" aria-hidden />
+                <LogInIcon className='size-4 drop-shadow-sm' aria-hidden />
                 Sign in
               </button>
             </SignInButton>
           </Show>
 
-          <Show when={"signed-in"}>
-            <div className="flex items-center ml-4 gap-2 border-l border-base-300 pl-3">
+          <Show when={'signed-in'}>
+            <div className='flex items-center ml-4 gap-2 border-l border-base-300 pl-3'>
               <UserButton
                 appearance={{
-                  elements: { avatarBox: "h-10 w-10 ring-2 ring-base-300" },
+                  elements: { avatarBox: 'h-10 w-10 ring-2 ring-base-300' },
                 }}
               />
-              {role === "support" || role === "admin" ? (
-                <span className="badge badge-primary badge-sm hidden capitalize md:inline-flex">
+              {role === 'support' || role === 'admin' ? (
+                <span className='badge badge-primary badge-sm hidden capitalize md:inline-flex'>
                   {role}
                 </span>
               ) : null}

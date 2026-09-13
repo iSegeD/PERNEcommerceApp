@@ -1,34 +1,34 @@
-import { type RequestHandler } from "express";
-import { getAuth } from "@clerk/express";
-import ImageKit from "@imagekit/nodejs";
+import { type RequestHandler } from 'express';
+import { getAuth } from '@clerk/express';
+import ImageKit from '@imagekit/nodejs';
 
-import z from "zod";
+import z from 'zod';
 
-import { getLocalUser } from "../lib/users.js";
-import { isAdmin } from "../lib/roles.js";
-import { getEnv } from "../lib/env.js";
-import { deleteImageKitAsset } from "../lib/imagekit.js";
+import { getLocalUser } from '../lib/users.js';
+import { isAdmin } from '../lib/roles.js';
+import { getEnv } from '../lib/env.js';
+import { deleteImageKitAsset } from '../lib/imagekit.js';
 
-import { db } from "../db/index.js";
-import { orderItems, products } from "../db/schema.js";
+import { db } from '../db/index.js';
+import { orderItems, products } from '../db/schema.js';
 
-import { count, desc, eq } from "drizzle-orm";
+import { count, desc, eq } from 'drizzle-orm';
 
 const env = getEnv();
 
 const productCreate = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  category: z.string().min(1).default("General"),
-  description: z.string().default(""),
+  category: z.string().min(1).default('General'),
+  description: z.string().default(''),
   priceCents: z.number().int().positive(),
-  currency: z.string().min(1).default("eur"),
+  currency: z.string().min(1).default('eur'),
   imageUrl: z
-    .union([z.string().url(), z.literal("")])
+    .union([z.string().url(), z.literal('')])
     .optional()
     .nullable(),
   imageKitFileId: z
-    .union([z.string().min(1), z.literal("")])
+    .union([z.string().min(1), z.literal('')])
     .optional()
     .nullable(),
   active: z.boolean().default(true),
@@ -58,11 +58,11 @@ const buildProductUpdateSet = (body: z.infer<typeof productPatch>) => {
     data.currency = body.currency;
   }
   if (body.imageUrl !== undefined) {
-    data.imageUrl = body.imageUrl === "" ? null : body.imageUrl;
+    data.imageUrl = body.imageUrl === '' ? null : body.imageUrl;
   }
   if (body.imageKitFileId !== undefined) {
     data.imageKitFileId =
-      body.imageKitFileId === "" ? null : body.imageKitFileId;
+      body.imageKitFileId === '' ? null : body.imageKitFileId;
   }
   if (body.active !== undefined) {
     data.active = body.active;
@@ -76,19 +76,19 @@ export const requireAdmin: RequestHandler = async (req, res, next) => {
     const { userId, isAuthenticated } = getAuth(req);
 
     if (!isAuthenticated || !userId) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ error: 'Unauthorized' });
       return;
     }
 
     const user = await getLocalUser(userId);
 
     if (!user) {
-      res.status(401).json({ error: "User not found" });
+      res.status(401).json({ error: 'User not found' });
       return;
     }
 
     if (!isAdmin(user.role)) {
-      res.status(403).json({ error: "Admin only" });
+      res.status(403).json({ error: 'Admin only' });
       return;
     }
 
@@ -162,14 +162,14 @@ export const updateAdminProduct: RequestHandler = async (req, res, next) => {
     if (!parsed.success) {
       res
         .status(400)
-        .json({ error: "Invalid body", details: parsed.error.flatten() });
+        .json({ error: 'Invalid body', details: parsed.error.flatten() });
       return;
     }
 
     const data = buildProductUpdateSet(parsed.data);
 
     if (Object.keys(data).length === 0) {
-      res.status(400).json({ error: "No fields to update" });
+      res.status(400).json({ error: 'No fields to update' });
       return;
     }
 
@@ -180,7 +180,7 @@ export const updateAdminProduct: RequestHandler = async (req, res, next) => {
       .returning();
 
     if (!row) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
@@ -201,7 +201,7 @@ export const deleteAdminProduct: RequestHandler = async (req, res, next) => {
       .limit(1);
 
     if (!existing) {
-      res.status(404).json({ error: "Not found" });
+      res.status(404).json({ error: 'Not found' });
       return;
     }
 
@@ -213,7 +213,7 @@ export const deleteAdminProduct: RequestHandler = async (req, res, next) => {
     if (Number(countRow?.c ?? 0) > 0) {
       res.status(409).json({
         error:
-          "This product is on one or more orders and cannot be deleted. Deactivate it instead",
+          'This product is on one or more orders and cannot be deleted. Deactivate it instead',
       });
       return;
     }
